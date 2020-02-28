@@ -7,4 +7,14 @@
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body></body>
+    <script>
+    
+    var hello_trial = {
+    	type: 'html-keyboard-response',
+    	stimulus: 'Hello people.'}
+    
+    jsPsych.init({
+    	timeline: [hello_trial]
+    })
+    </script>
 </html>
