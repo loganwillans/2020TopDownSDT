@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Signal Detection Experiment</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<script src="../js/res/defaults.js"></script>
+		<script src="../js/res/ui/tabs1.js"></script>
+		<script src="../js/res/draw/color.js"></script>
+		<script src="../js/res/draw/draw.js"></script>
+		<script src="../js/res/txt/font.js"></script>
+		<script src="../js/res/ui/button.js"></script>
+		<script src="../js/res/io/slider.js"></script>
+		<script src="../js/res/method/startupScreen.js"></script>
+		<script src="../js/res/model/normalDistribution.js"></script>
+		<script src="../js/res/method/sigdet.js"></script>
+		<script src="../js/res/ui/resizeCanvas.js"></script>
+		<script src="../js/res/stim/motion/movingDots.js"></script>
+		<script src="../js/psychophysics/sigDetExp.js"></script>
+		<script src="../js/res/txt/table.js"></script>
+		<script src="../js/res/method/experiment_evt.js"></script>
+		<link href="../css/RichWebSP.css" rel="stylesheet">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600&amp;nfcezt" />
+		<link href="../css/tab.css" rel="stylesheet">
+		<style type="text/css">
+		  .bodyPage:-webkit-full-screen {
+		    width: 100%;
+		    height: 100%;
+		  }
+		  .bodyPage:-moz-full-screen {
+		    width: 100%;
+		    height: 100%;
+		  }
+		</style>
+
+	</head>
+<body>
+	<div class='breadcrumbs'>
+		<a href="https://edge.sagepub.com/schwartz" target="_top"><img src="https://edge.sagepub.com/sites/all/themes/sage_companion/assets/images/sageedge.png" height="18" alt="Sage Edge Logo, links to Sage Edge Site for Schwartz and Krantz Sensation and Perception"></a> | <a href="../" class="crumblink" target="_top">ISLE</a> | <a href="../Chapter02.html" class="crumblink">Chapter 2</a>
+         | <em class="curpage">Signal Detection Experiment</em>
+	</div>
+	<div id="bodyPage">
+		<form>
+			<input type="hidden" id="useTabs" name="useTabs" value="true">
+			<input type="hidden" id="allowFullScreen" = name="fullScreen" value="true">
+		</form>
+		<div id="wrapper">
+		  <div id="tabContainer">
+		    <div id="tabs">
+		      <ul>
+		        <li id="tabHeader_1">Background</li>
+		        <li id="tabHeader_2">Instructions</li>
+		        <li id="tabHeader_3">Stimulus Settings</li>
+		        <li id="tabHeader_4">Method Settings</li>
+		        <li id="tabHeader_5" name="canvasTab">Experiment</li>
+		        <li id="tabHeader_6">Results</li>
+		        <li id="tabHeader_7">Quiz</li>
+		      </ul>
+		    </div>
+		    <div id="tabscontent">
+		      <div class="tabpage" id="tabpage_1">
+		      	<h2>Background</h2>
+		      	<p class="paragraphs">
+		      		On July 3, 1988, Iran Air Flight 655 was shot down by a U. S. missile from the navy vessel, the U.S.S. Vincennes.
+		      		The missile killed all 290 passengers and crew, including 66 children.    Though the United States 
+		      		has never apologized to Iran, 
+		      		the US government gave $61 million to the relatives of the victims of the attack.
+		      		The incident took place at a time in which there was heavy tension between the United States and Iran, and Iranian jets
+		      		had previously attacked US navy vessels.  However, in this case, the radar on the Vincennes mistakenly judged the civilian
+		      		airplane, an Airbus A300, to be an incoming Iranian F-14 fighter.   Why had the U.S. Navy 
+		      		made such a terrible mistake?
+		      	</p>
+		      	<p class="paragraphs">
+		      		Consider the radar specialist examining the screen that depicted incoming objects.  He or she must decide based on the
+		      		information available on the radar screen if the incoming object is an enemy warplane (Iran had F-14s) or a harmless
+		      		jetliner (Airbus A300).   How does one tell the difference?  In a war-zone with an object approaching you at 600 miles
+		      		per hour, decisions must be made quickly.
+		      	</p>
+		      	<p class="paragraphs">
+					From the U.S. Navy’s standpoint, there are two types of errors that can be made.  The Navy could mistake a civilian airplane
+					for a military jet  (as they did in this case), or they could mistake a military jet for a civilian airplane. Both of
+					these errors could have fatal consequences for innocent people.  In psychophysical terms, the navy’s actual error is
+					called a false alarm, in which a harmless signal is perceived as dangerous.  The other error is called a miss, in which
+					a harmful signal is perceived as harmless.  In one case, the danger is to innocent civilians aboard the aircraft, whereas
+					in the other case, the danger is to equally innocent personnel aboard the US Navy ship.
+				</p>
+				<p class="paragraphs">
+					In such a situation, there are also two potential correct responses.   A correct rejection is when a harmless signal is
+					perceived as harmless, and a “hit” occurs when a harmful signal is correctly perceived as dangerous.  In this case, the
+					correct response should have been a correct rejection.
+				</p>
+				<p class="paragraphs">
+					In this experiment, you will play the role of the radar operator.  You will look at a circular screen.  You will see several dots.
+					Most of these dots will be harmless civilian aircraft, but on some trials you will see one, 
+					flying faster (or moving faster across
+					your screen).  This faster dot is the target aircraft.  You only have a brief period of time.  After a 
+					few seconds, the screen will go
+					blank, and you must make your decision.
+		      	</p>
+		      </div>
+		      <div class="tabpage" id="tabpage_2">
+		        <h2>Instructions</h2>
+		        <h4 class="fitting">If you do not see six (6) tabs across the top, widen your browser or rotate your phone or tablet so that it is wide.</h4>
+		        <h3>Full Screen Mode</h3>
+		        <p id="fullscreen_instr">To see the illustration in full screen, which is recommended, press the <em>Full Screen</em> button, which appears  								                    at the top of the page.</p>
+				<h3>Stimulus Settings Tab</h3>
+				<p id="settings_instr">On this tab you can adjust the parameters of the stimuli to see you they alter
+					your ability to detect the target.  The settings include the following: </p>
+                    <p id = "settings">
+						<em class="setEm">Number of Background Dots</em>: the number of harmless, nontarget dots that will be presented on each trial.<br><br>
+						<em class="setEm">Relative Speed of Stimulus</em>: how much faster the target is than the background dots (in pixels per update of the screen).<br><br>
+						<em class="setEm">Stimulus Color</em>: how different the stimulus color is from the background dots.  
+						You can control the amount of red in the stimulus.<br><br>
+						<em class="setEm">Duration of Stimulus</em>: how long the moving dots will be presented (sec).<br><br>
+		                <em class="setEm">Reset</em>: at the top of the settings page is a <em>Reset</em> button.  Pressing this button restores the method settings to their default values.
+                </p>
+				<h3>Method Settings Tab</h3>
+				<p class="settings_instr">On this tab you can adjust how the method will work.  The settings include the
+					following: </p>
+                    <p class = "settings">
+						<em class="setEm">Number of Trials</em>: how many trials will be presented.<br><br>
+						<em class="setEm">Percentage of Trials With Signal</em>: what percentage of the above trials will be have the target stimulus.<br>
+						Be careful here.  Use this value.  If the stimulus is rare and you are unsure, what is your best guess?<br><br>
+		                <em class="setEm">Reset</em> At the top of the settings page is a <em>Reset</em> button.  Pressing this button restores the stimulus settings to their default values.
+                	</p>
+		        <h3>Experiment Tab</h3>
+		        <p id="illustration_instr">On the Experiment tab, press the space bar or the <em>Start</em> button 
+		        	on the screen to start the experiment.
+		        	When a trial begins, dots will start moving from the outer edge.  On some trials, there is a target dot that moves
+		        	faster than the others.  When the trial is over, the dots are cleared and you will have buttons to record your responses.
+		        	Repond <em>Yes</em> if you see the target resonse and <em>no</em> if you did not.  
+		        	If you are unsure you must guess, but do so
+		        	that gives you the best chance of being correct.  If you have a keyboard the Z key will work 
+		        	for <em>Yes</em>, and the
+		        	/ key will work for <em>No</em>.
+		        	<br><br>
+		        	When you have finished all of your trials, you will be instructed that you can view your results.
+				</p>
+				<h3>Results Tab</h3>
+				<p class="settings_instr">Your data will be presented on this tab.
+					You will see your results in a table.
+					<br>
+					"His" will be in the upper left box of the table when there was a target
+					and you said there was.
+					<br>
+					"Misses" will be in the lower left box of the table when there was a target
+					and you said there was not one.
+					<br>
+					"False Alarms" will be in the upper right box of the table when there was not a target
+					and you said there was.
+					<br>
+					"Correct Rejections" will be in the lower right box of the table when there was not a target
+					and you said there was not one.
+					<br>
+					To see your d' and criterion values, click the button that says <em>Show Threshold</em>.
+					See the text and other activities for an explanation of these values.  To display the data from
+					the table in a comma-separated format click the <em>Show Data</em> button.</p>
+		      </div>
+		      <div class="tabpage" id="tabpage_3">
+				<p class="UI_top">
+					<form>
+						<input type="button" id="reset" value="Reset" alt="Reset">
+						<input type="button" id="new" class="new" value="New Study" alt="New Study">
+					</form>
+				</p>
+				<h3>Settings for Stimuli in Signal Detection Experiment</h3>
+		      	<p>Change the settings below to alter the stimulus parameters in this experiment.</p>
+				<p id="stimSetup"> </p>
+		      </div>
+		      <div class="tabpage" id="tabpage_4">
+				<p class="UI_top">
+					<form>
+						<input type="button" id="resetMethod" value="Reset" alt="Reset">
+						<input type="button" id="new1" class="new" value="New Study" alt="New Study">
+					</form>
+				</p>
+		      	<h3>Experimental Method Settings</h3>
+		      	<p id="exp_methods"> </p>
+				<p id="ivControl"> </p>
+		      </div>
+		      <div class="tabpage" id="tabpage_5">
+				<canvas id="expCanvas"> </canvas>
+				<canvas id="holdResp"> </canvas>
+		      </div>
+		      <div class="tabpage" id="tabpage_6">
+		      	<h3>Your Results</h3>
+				<p class="UI_top">
+					<form>
+						<input type="button" id="new2" class="new" value="New Study" alt="New Study">
+					</form>
+				</p>
+		      	<canvas id="results"> </canvas>
+		      	<span id="resultVal" class="resultVal"> </span>
+		      	<p id="resExp" class="resExplanation"> </p>
+		      	<script>
+		      		var experiment = new Experiment(new SignalDetection("exp_methods","holdResp"),
+		      										new MovingDotsExp("stimSetup","expCanvas"),
+								      				new SigDetExp(), "tabpage_5",
+								      				new SDT_Table("results","resExp","resultVal")); // send method stimulus, and container to respond to
+					experiment.setupListener("reset","resetMethod");
+					experiment.setupNewExpListener("new");
+					experiment.init();
+					experiment.initIVControl("ivControl");
+		      	</script>
+		      </div>
+		      <div class="tabpage" id="tabpage_7">
+				<p class="paragraphs">
+					<a href="http://studysites.sagepub.com/quiz/index.htm?type=Quiz&file=ch2-9&folder=schwartz" class="makeLink" target="_blank">Proceed to Quiz</a>
+				</p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+<script type="text/javascript">
+var _statcounter = _statcounter || [];
+_statcounter.push({"tags": {"chapter": "02", "actType": "experiment", "sense": "vision"}});
+</script>
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=9691436; 
+var sc_invisible=1; 
+var sc_security="02730791"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="site stats"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="//c.statcounter.com/9691436/0/02730791/1/" alt="site
+stats"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50393918-1', 'hanover.edu');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
