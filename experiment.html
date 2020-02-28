@@ -9,12 +9,22 @@
     <body></body>
     <script>
     
-    var hello_trial = {
-    	type: 'html-keyboard-response',
-    	stimulus: 'Hello aliens.'}
+    //create timeline
+    var timeline = [];
     
+    //hello trial
+    var hello = {
+    	type: 'html-keyboard-response',
+    	stimulus: 'Hello aliens.'
+    }
+    timeline.push(hello);
+    
+    //instructions trial
+    
+    
+    //start experiment
     jsPsych.init({
-    	timeline: [hello_trial]
+    	timeline: timeline
     })
     </script>
 </html>
