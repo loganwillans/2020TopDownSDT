@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Experiment</title>
+        <script src="jspsych-6.1.0/jspsych.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+        <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body></body>
+    <script>
+        var timeline = []
+
+        var id
+        var id_entry = 
+        {
+            type: 'survey-text',
+            questions: 
+            [
+                {prompt: 'Enter the participant ID'}
+            ],
+            on_finish:
+        }
+
+        var introduction =
+        {
+            type: 'html_keyboard_response',
+            stimulus: 'text goes here',
+            on_finish: 
+        }
+
+        var fixation_cross = 
+        {
+            type: 'html-keyboard-response',
+            stimulus: '<p style="font-size: 48px;">+</p>',
+            choices: jsPsych.NO_KEYS,
+            trial_duration: 1000,
+        }
+
+    </script>
+</html>
