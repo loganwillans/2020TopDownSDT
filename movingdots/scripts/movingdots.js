@@ -8,9 +8,9 @@ const wh = canvas.width = canvas.height = 250;
 let balls = [];
 
 //global ball variables:
-let ballCount = 25;
-let ballSize = 5;
-let ballFastV = 0.8;
+let ballCount = 50;
+let ballSize = 4;
+let ballFastV = 0.5;
 let ballSlowV = 0.3;
 let ballColor = 'green'
 let circleRadius = wh*0.5 - 2*ballSize //radius is two ball-widths smaller than half of canvas size
