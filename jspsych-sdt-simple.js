@@ -20,11 +20,8 @@ jsPsych.plugins['sdt'] = (function(){
     }
   }
 
-/*------------------------------BEGIN TRIAL------------------------------*/
+  /*------------------------------BEGIN TRIAL------------------------------*/
   plugin.trial = function(display_element, trial){
-  
-  /*------------------------set parameters------------------------*/
-  trial.faster_or_same = assignParameterValue(trial.faster_or_same, 0);
   
   /*------------------------convert parameters to SDT------------------------*/
   let faster_check = trial.faster_or_same;
@@ -170,8 +167,10 @@ jsPsych.plugins['sdt'] = (function(){
   } else {
 	noFastBalls();
   }
-  loop();
+  requestAnimationFrame(loop);
   
+  //clear display element
+  //jsPsych.finishtrial
   /*------------------------------------------------------------*/
   /*------------------------END SDT CODE------------------------*/
   
