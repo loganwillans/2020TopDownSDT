@@ -1,3 +1,9 @@
+/* SDT Plugin for JSPsych
+   Written by Lingxiu Zhang with help from the RDK Plugin for JSPsych.
+   Work in progress.
+   If you contribute, please add your name to the authors list above.
+*/
+
 jsPsych.plugins['sdt'] = (function(){
 
   var plugin = {};
@@ -146,37 +152,38 @@ jsPsych.plugins['sdt'] = (function(){
   }
   
   //-----------check if response is correct------------
-  function check_correct(){
-						
-			//Check that the correct_choice has been defined
-			if(typeof trial.correct_choice !== 'undefined'){
-				//If the correct_choice variable holds an array
-				if(trial.correct_choice.constructor === Array){ //If it is an array
-					//If the elements are characters
-					if(typeof trial.correct_choice[0] === 'string' || trial.correct_choice[0] instanceof String){
-						trial.correct_choice = trial.correct_choice.map(function(x){return x.toUpperCase();}); //Convert all the values to upper case
-						return trial.correct_choice.includes(String.fromCharCode(response.key)); //If the response is included in the correct_choice array, return true. Else, return false.
-					}
-					//Else if the elements are numbers (javascript character codes)
-					else if (typeof trial.correct_choice[0] === 'number'){
-						return trial.correct_choice.includes(response.key); //If the response is included in the correct_choice array, return true. Else, return false.
-					}
-				}
-				//Else compare the char with the response key
-				else{
-					//If the element is a character
-					if(typeof trial.correct_choice === 'string' || trial.correct_choice instanceof String){
-						//Return true if the user's response matches the correct answer. Return false otherwise.
-						return response.key == trial.correct_choice.toUpperCase().charCodeAt(0);
-					}
-					//Else if the element is a number (javascript character codes)
-					else if (typeof trial.correct_choice === 'number'){
-						console.log(response.key == trial.correct_choice);
-						return response.key == trial.correct_choice;
-					}
-				}
+  function check_correct(){			
+	//Check that the correct_choice has been defined
+	if(typeof trial.correct_choice !== 'undefined'){
+		if(trial.correct_choice.constructor === Array){ //check if it is an array
+			//If the elements are characters
+			if(typeof trial.correct_choice[0] === 'string' || trial.correct_choice[0] instanceof String){
+				//Convert all the values to upper case
+				trial.correct_choice = trial.correct_choice.map(function(x){return x.toUpperCase();});
+				//If the response is included in the correct_choice array, return true. Else, return false.
+				return trial.correct_choice.includes(String.fromCharCode(response.key));
+			}
+			//Else if the elements are numbers (javascript character codes)
+			else if (typeof trial.correct_choice[0] === 'number'){
+			    //If the response is included in the correct_choice array, return true. Else, return false.
+				return trial.correct_choice.includes(response.key);
 			}
 		}
+		//Else compare the char with the response key
+		else{
+			//If the element is a character
+			if(typeof trial.correct_choice === 'string' || trial.correct_choice instanceof String){
+				//Return true if the user's response matches the correct answer. Return false otherwise.
+				return response.key == trial.correct_choice.toUpperCase().charCodeAt(0);
+			}
+			//Else if the element is a number (javascript character codes)
+			else if (typeof trial.correct_choice === 'number'){
+				console.log(response.key == trial.correct_choice);
+				return response.key == trial.correct_choice;
+			}
+		}
+	}
+  }
   
   /*------------------------SDT FUNCTIONS BEGIN------------------------*/
   /*-------------------------------------------------------------------*/
