@@ -10,7 +10,7 @@ let balls = [];
 //global ball variables:
 let ballCount = 50;
 let ballSize = 4;
-let ballFastV = 0.5;
+let ballFastV = 3.5;
 let ballSlowV = 0.3;
 let ballColor = 'green'
 let circleRadius = wh*0.5 - 2*ballSize //radius is two ball-widths smaller than half of canvas size
@@ -33,6 +33,7 @@ function Ball(rotP, dV, rotV, color, size) {
 
 //populates balls array with slow balls and one fast ball
 function oneFastBall(){
+
   while (balls.length < ballCount) {
     //store rotP variable to help inform ball direction
     let rotP = random(0, 2*Math.PI);
@@ -40,7 +41,6 @@ function oneFastBall(){
     //this means that ball should move randomly between 45deg arc on either side of radius line
     //which translates to 135deg~225deg. need to add rotP to correct for ball location on circle.
     let rotV = random(3/4*Math.PI, 5/4*Math.PI) + rotP;
-    
     let ball = new Ball(
       rotP,
       ballSlowV,
@@ -56,7 +56,6 @@ function oneFastBall(){
     let rotP = random(0, 2*Math.PI);
     //ibid. (check above)
     let rotV = random(3/4*Math.PI, 5/4*Math.PI) + rotP;
-    
     let ball = new Ball(
       rotP,
       ballFastV,
