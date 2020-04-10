@@ -7,6 +7,7 @@
     <script src="jspsych-sdt-simple.js"></script>
     <script src="js/serverComm.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-call-function.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
     <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body></body>
@@ -28,23 +29,24 @@
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
-      stimulus: '<p>Thank you for participating in our study. Press any key to begin.</p>'
+      stimulus: "Thank you for participating in our study. <br>In this experiment, you will play the role of the radar operator for a large civilian airport. <br>You will look at a screen and see several moving dots representing planes. Most of these dots will be harmless civilian aircrafts, but on some trials you will see one, flying faster (or moving faster across the screen). <br>The faster dot is the target military aircraft intended to bomb the airport. <br>Press any key to continue."
     };
     timeline.push(welcome);
 
     var debrief_trial = {
       type: 'html-keyboard-response',
       stimulus: '<p>You are done!</p>'+
-                '<p>Placeholder debrief</p>'+
-                '<p><a href="http://www.prolific.co">Click here to return to Prolific and complete the study</a>. You do not need a completion code.</p>',
+                '<p>This experiment looked at stimulus detection where the cue is given before the signal or after for different trials. <br>In the different trials there were cues that primed for false positive responses and false negative responses depending on how many people were at the airport versus on a plane. <br>Based on previous research, the position of the cue before or after could potentially influence the performance of signal detection <br>and we hope to further clarify through our experiment that this is a judgement call and not a physical change in signal perception.  <br>Thank you again for your participation.</p>'+
+                '<p><a href="https://app.prolific.co/submissions/complete?cc=7DBB2DE5">Click here to return to Prolific and complete the study</a>. You do not need a completion code.</p>',
       choices: jsPsych.NO_KEYS
     }
 
     var lasttimelinedata = jsPsych.data.getLastTimelineData()
     var instructions = {
       type: 'html-keyboard-response',
-      stimulus: "In this experiment, you will be playing the role of a radar operator for a large civilian airport.<br> An animation will appear in the middle of your screen filled with various dots.<br>Most of these dots will be harmless civilian aircraft. However, in some trials there will be a faster dot. <br>This faster moving dot is a highjacked aircraft attempting to bomb the civilian airport. <br>Please note there are also civilians on the hijacked aircraft.<br>A scenario explaining the situation will either appear before or after the dot animation.<br>After you are given both your scenario and animation, a screen will appear asking whether or not you saw a faster moving dot.<br>On this screen you will press 'F' for yes or 'J' for no. If yes, then the number of people on the plane will be killed. <br>If no, then the number of people in the airport will be killed. <br>When you are ready to begin, press any key."
-    }
+      stimulus: "You only have a brief period of time to make your decision. After a few seconds the screen will go blank and you must make your decision on whether there is a faster plane.  <br>By saying yes, you are shooting a missile at that plane, killing everyone on board. <br>If you say yes when there is no faster plane, you risk killing all the civilians on the plane. <br>By saying no even if there is a faster military plane present, the military plane bombs the airport, killing all the civilians there. <br>To say yes there is a faster plane press the ‘F’. To say no, press ‘J’. <br>In each round, you will get information on how many people are in the airport and how many are in the planes to help you make your choice. <br>In some rounds, this information will be presented before you see the screen of dots and in others you will get this information after you see the screen. <br>To continue press any key to begin. Good luck!"
+
+    } 
     timeline.push(instructions)
 
     var falsePositiveScenario = {
@@ -177,7 +179,14 @@
           serverComm.save_data(jsPsych.data.get().values())
         }
     }
+    var survey_trial = {
+  type: 'survey-text',
+  questions: [
+    {prompt: "Did you run into any issues while completing this experiment?", name: 'issues'}, 
+  ],
+};
     timeline.push(saveData)
+    timeline.push(survey_trial)
     timeline.push(debrief_trial)
     
     /* start the experiment */
