@@ -16,7 +16,14 @@ jsPsych.plugins['sdt'] = (function(){
     		pretty_name: "faster?",
     		default: 0,
     		description: "whether there is a faster ball or not"
-    	},
+      },
+      trial_duration:
+      {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Trial duration',
+        default: 10101,
+        description: 'How long to show trial before it ends.'
+      }
     }
   }
 
@@ -119,18 +126,42 @@ jsPsych.plugins['sdt'] = (function(){
     }
   }
   
+    // function to end trial when it is time
+    var end_trial = function() {
+
+      // kill any remaining setTimeout handlers
+      jsPsych.pluginAPI.clearAllTimeouts();
+
+      // clear the display
+      display_element.innerHTML = '';
+
+      // move on to the next trial
+      jsPsych.finishTrial();
+    };
+
   /*------------------------FLOW CONTROL------------------------*/
   //loop function
-  function loop() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-    ctx.fillRect(0, 0, wh, wh);
+  function animation() 
+  {
+    var start = Date.now()
+    function loop(){
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+     ctx.fillRect(0, 0, wh, wh);
   
-    for (let i = 0; i < balls.length; i++) {
-      balls[i].draw();
-      balls[i].update();
+      for (let i = 0; i < balls.length; i++) {
+        balls[i].draw();
+        balls[i].update();
+      }
+
+      if (Date.now() - start < 10100) {
+      requestAnimationFrame(loop);
+      }
+      else{
+        end_trial()
+      }
     }
+    loop()
     
-    requestAnimationFrame(loop);
   }
   
   //ball draw function
@@ -167,14 +198,15 @@ jsPsych.plugins['sdt'] = (function(){
   } else {
 	noFastBalls();
   }
-  requestAnimationFrame(loop);
-  
+  animation();
+
   //clear display element
   //jsPsych.finishtrial
   /*------------------------------------------------------------*/
   /*------------------------END SDT CODE------------------------*/
-  
-  } //--------END OF TRIAL--------
+  //--------END OF TRIAL--------
+
+  } 
 
   return plugin;
 

@@ -4,7 +4,7 @@
     <title>My experiment</title>
     <script src="jspsych-6.1.0/jspsych.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="movingdots/scripts/movingdots.js"></script>
+    <script src="jspsych-sdt-simple.js"></script>
     <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body></body>
@@ -13,129 +13,165 @@
     /* create timeline */
     var timeline = [];
     
-    var subjectID = jsPsych.randomization.randomID(16);
+    var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
+    if(typeof subject_id == 'undefined'){
+      subject_id = jsPsych.randomization.randomID(30);
+    }
 
     jsPsych.data.addProperties({
-      subjectID: subjectID
+      subject_id: subject_id
     })
+
 
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
-      stimulus: '<p>Thank you for participating in our study.</p>' +
-                '<p>In this experiment, you will play the role of the radar operator for a large civilian airport.</p>' +
-                '<p>You will look at a circular screen and see several moving dots. Most of these dots will be harmless civilian aircraft,</p>' + 
-                '<p>but on some trials you will see one, flying faster (or moving faster across the screen). The faster dot is the target military aircraft intended to bomb the airport.</p>' + 
-                '<p>You only have a brief period of time. After a few seconds the screen will go blank and you must make your decision on whether to fire a missile. </p>' +
-                '<p>When you are ready, press any key to continue</p>'
+      stimulus: '<p>Thank you for participating in our study. Press any key to begin.</p>'
     };
     timeline.push(welcome);
+
+    var debrief_trial = {
+      type: 'html-keyboard-response',
+      stimulus: '<p>You are done!</p>'+
+                '<p>Placeholder debrief</p>'+
+                '<p><a href="http://www.prolific.co">Click here to return to Prolific and complete the study</a>. You do not need a completion code.</p>',
+      choices: jsPsych.NO_KEYS
+    }
 
     var lasttimelinedata = jsPsych.data.getLastTimelineData()
     var instructions = {
       type: 'html-keyboard-response',
-      stimulus: 'Instructions part 1'
+      stimulus: "In this experiment, you will be playing the role of a radar operator for a large civilian airport.<br> An animation will appear in the middle of your screen filled with various dots.<br>Most of these dots will be harmless civilian aircraft. However, in some trials there will be a faster dot. This faster moving dot is a highjacked aircraft attempting to bomb the civilian airport, please note there are also civilians on the hijacked aircraft.<br>A scenario explaining the situation will either appear before or after the dot animation.<br>After you are given both your scenario and animation, a screen will appear asking whether or not you saw a faster moving dot.<br>On this screen you will press 'F' for yes or 'J' for no. If yes, then the number of people on the plane will be killed. If no, then the number of people in the airport will be killed. <br>When you are ready to begin, press any key."
     }
     timeline.push(instructions)
 
     var falsePositiveScenario = {
       type: 'html-keyboard-response',
-      stimulus: "Today, the airport is busy and expected to have around 500 civilians whereas the planes flying have around 100 passengers. Do you see the enemy aircraft?",
-      trial_duration: 5000
+      stimulus: "Today, the airport is busy and expected to have around 500 civilians whereas the planes flying have around 100 passengers.",
+      trial_duration: 4000
     }
     
     var falseNegativeScenario = {
       type: 'html-keyboard-response',
-      stimulus: "The airport is quiet today with only around 100 people. The planes flying today are full with up to 500 passengers on the Airbus A380. Do you see the enemy aircraft?",
-      trial_duration: 5000
+      stimulus: "The airport is quiet today with only around 100 people. The planes flying today are full with up to 500 passengers on the Airbus A380.",
+      trial_duration: 4000
     }
 
     var pleaseAnswer = {
       type: 'html-keyboard-response',
       stimulus: "Was there a faster dot? Press 'F' for yes or 'J' for no.",
-      choices: ['f', 'j']
+      choices: ['f', 'j'],
+      on_finish: function(data){
+        if(data.wasFastDot == "noFastDot" && data.key_press == 70){
+          data.correct = false;
+        } 
+        else {
+          data.correct = true;
+        }
+        }
     }
     
     var whitescreen = {
       type: 'html-keyboard-response',
       stimulus: '',
-      trial_duration: 1000
+      trial_duration: 1000,
+      choices: jsPsych.NO_KEYS
     }
 
-    var fastPlaceholder = {
-      type: 'html-keyboard-response',
-      stimulus: 'Placeholder fast'
+    var noFastBall = {
+      type: 'sdt',
+      faster_or_same: 0,
     }
 
-    var noFastPlaceholder = {
-      type: 'html-keyboard-response',
-      stimulus: 'Placeholder no fast'
+    var oneFastBallTrial = {
+      type: 'sdt',
+      faster_or_same: 1,
     }
     
-    var trialComplete ={
-      type: 'html-keyboard-response',
-      stimulus: 'trial is complete, moving to next trial',
-      trial_duration: 1000
-    }
     
     //False positive scenario, before the dots, with no dot moving faster
     var positiveBeforeSame = {
-      timeline: [falsePositiveScenario, noFastPlaceholder, pleaseAnswer, trialComplete],
-      data: {wasFastDot: "noFastDot"},
-      on_finish: function(lasttimelinedata){
-        if(lasttimelinedata.key_press == 70){
-          lasttimelinedata.correct = true;
-        } 
-        else {
-          lasttimelinedata.correct = false;
-        }
-        }
+      timeline: [whitescreen, falsePositiveScenario, oneFastBallTrial, pleaseAnswer],
+      data: {wasFastDot: "noFastDot",
+             scenarioPlacement: "before",
+             scenarioType: "falsePositive"}
     }
     //False positive scenaro, before the dots, with one dot moving faster.
     var positiveBeforeDifferent = {
-      timeline: [falsePositiveScenario, fastPlaceholder, pleaseAnswer, trialComplete],
-      data: {wasFastDot: "yesFastDot"}
+      timeline: [whitescreen, falsePositiveScenario, noFastBall, pleaseAnswer],
+      data: {wasFastDot: "yesFastDot",
+             scenarioPlacement: "before",
+             scenarioType: "falsePositive"}
     }
     //False negative scenario, before the dots, with no dot moving faster
     var negativeBeforeSame = {
-      timeline: [falseNegativeScenario, noFastPlaceholder, whitescreen, trialComplete],
-      data: {wasFastDot: "noFastDot"}
+      timeline: [whitescreen, falseNegativeScenario, oneFastBallTrial, pleaseAnswer],
+      data: {wasFastDot: "noFastDot",
+            scenarioPlacement: "before",
+            scenarioType: "falseNegative"}
     }
     //False negative scenaro, before the dots, with one dot moving faster.
     var negativeBeforeDifferent = {
-      timeline: [falseNegativeScenario, fastPlaceholder, whitescreen, trialComplete],
-      data: {wasFastDot: "yesFastDot"}
+      timeline: [whitescreen, falseNegativeScenario, noFastBall, pleaseAnswer],
+      data: {wasFastDot: "yesFastDot",
+             scenarioPlacement: "before",
+             scenarioType: "falseNegative"}
     }
     //False posative scenario, after the dots, with no dot moving faster
     var positiveAfterSame = {
-      timeline: [whitescreen, noFastPlaceholder, falsePositiveScenario, trialComplete],
-      data: {wasFastDot: "noFastDot"}
+      timeline: [whitescreen, oneFastBallTrial, falsePositiveScenario, pleaseAnswer],
+      data: {wasFastDot: "noFastDot",
+             scenarioPlacement: "after",
+             scenarioType: "falsePositive"}
     }
     //False positive scenaro, after the dots, with one dot moving faster.
     var positiveAfterDifferent = {
-      timeline: [whitescreen, fastPlaceholder, falsePositiveScenario, trialComplete],
-      data: {wasFastDot: "yesFastDot"}
+      timeline: [whitescreen, noFastBall, falsePositiveScenario, pleaseAnswer],
+      data: {wasFastDot: "yesFastDot",
+             scenarioPlacement: "after",
+             scenarioType: "falsePositive"}
     }
     //False negative scenario, after the dots, with no dot moving faster
     var negativeAfterSame = {
-      timeline: [whitescreen, noFastPlaceholder, falseNegativeScenario, trialComplete],
-      data: {wasFastDot: "noFastDot"}
+      timeline: [whitescreen, oneFastBallTrial, falseNegativeScenario, pleaseAnswer],
+      data: {wasFastDot: "noFastDot",
+             scenarioPlacement: "after",
+             scenarioType: "falseNegative"}
     }
     //False negative scenaro, after the dots, with one dot moving faster.
     var negativeAfterDifferent = {
-      timeline: [whitescreen, fastPlaceholder, falseNegativeScenario, trialComplete],
-      data: {wasFastDot: "yesFastDot"}
+      timeline: [whitescreen, noFastBall, falseNegativeScenario, pleaseAnswer],
+      data: {wasFastDot: "yesFastDot",
+             scenarioPlacement: "after",
+             scenarioType: "falseNegative"}
     }
 
-    var trialArray = [positiveBeforeSame, positiveBeforeDifferent, negativeBeforeSame, negativeBeforeDifferent, positiveAfterSame, positiveAfterDifferent, negativeAfterSame, negativeAfterDifferent]
-    var shuffledTrialArray = jsPsych.randomization.repeat(trialArray, 1)
+    var trialBeforeArray = [positiveBeforeSame, positiveBeforeDifferent, negativeBeforeSame, negativeBeforeDifferent]
+    var trialAfterArray = [positiveAfterSame, positiveAfterDifferent, negativeAfterSame, negativeAfterDifferent]
+    var shuffledBeforeTrialArray = jsPsych.randomization.repeat(trialBeforeArray, 2)
+    var shuffledAfterTrialArray = jsPsych.randomization.repeat(trialAfterArray, 2)
 
-    for(var i = 0; i < shuffledTrialArray.length; i++){
-      timeline.push(shuffledTrialArray[i])
+    function coinFlip() {
+      return (Math.floor(Math.random() * 2) == 0);
+      }
+    if(coinFlip() == true){
+      for(var i = 0; i < shuffledBeforeTrialArray.length; i++){
+        timeline.push(shuffledBeforeTrialArray[i])
+      }
+      for(var i = 0; i < shuffledAfterTrialArray.length; i++){
+        timeline.push(shuffledAfterTrialArray[i])
+      }
     }
-
-
-
+    else{
+      for(var i = 0; i < shuffledAfterTrialArray.length; i++){
+        timeline.push(shuffledAfterTrialArray[i])
+      }
+      for(var i = 0; i < shuffledBeforeTrialArray.length; i++){
+       timeline.push(shuffledBeforeTrialArray[i])
+      }
+    }
+    timeline.push(debrief_trial)
+    
     /* start the experiment */
     jsPsych.init({
       timeline: timeline,
