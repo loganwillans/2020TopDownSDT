@@ -43,19 +43,19 @@
     var lasttimelinedata = jsPsych.data.getLastTimelineData()
     var instructions = {
       type: 'html-keyboard-response',
-      stimulus: "In this experiment, you will be playing the role of a radar operator for a large civilian airport.<br> An animation will appear in the middle of your screen filled with various dots.<br>Most of these dots will be harmless civilian aircraft. However, in some trials there will be a faster dot. This faster moving dot is a highjacked aircraft attempting to bomb the civilian airport, please note there are also civilians on the hijacked aircraft.<br>A scenario explaining the situation will either appear before or after the dot animation.<br>After you are given both your scenario and animation, a screen will appear asking whether or not you saw a faster moving dot.<br>On this screen you will press 'F' for yes or 'J' for no. If yes, then the number of people on the plane will be killed. If no, then the number of people in the airport will be killed. <br>When you are ready to begin, press any key."
+      stimulus: "In this experiment, you will be playing the role of a radar operator for a large civilian airport.<br> An animation will appear in the middle of your screen filled with various dots.<br>Most of these dots will be harmless civilian aircraft. However, in some trials there will be a faster dot. <br>This faster moving dot is a highjacked aircraft attempting to bomb the civilian airport. <br>Please note there are also civilians on the hijacked aircraft.<br>A scenario explaining the situation will either appear before or after the dot animation.<br>After you are given both your scenario and animation, a screen will appear asking whether or not you saw a faster moving dot.<br>On this screen you will press 'F' for yes or 'J' for no. If yes, then the number of people on the plane will be killed. <br>If no, then the number of people in the airport will be killed. <br>When you are ready to begin, press any key."
     }
     timeline.push(instructions)
 
     var falsePositiveScenario = {
       type: 'html-keyboard-response',
-      stimulus: "Today, the airport is busy and expected to have around 500 civilians whereas the planes flying have around 100 passengers.",
+      stimulus: "Today, the airport is busy and expected to have around 500 civilians whereas the planes flying have around 100 passengers. <br>Press any key to continue.",
       trial_duration: 4000
     }
     
     var falseNegativeScenario = {
       type: 'html-keyboard-response',
-      stimulus: "The airport is quiet today with only around 100 people. The planes flying today are full with up to 500 passengers on the Airbus A380.",
+      stimulus: "The airport is quiet today with only around 100 people. The planes flying today are full with up to 500 passengers on the Airbus A380.<br>Press any key to continue.",
       trial_duration: 4000
     }
 
@@ -175,9 +175,9 @@
 
     var saveData = {
         type: 'call-function',
-        func: function()(
+        func: function(){
           serverComm.save_data(jsPsych.data.get().values())
-        )
+        }
     }
     timeline.push(saveData)
     timeline.push(debrief_trial)

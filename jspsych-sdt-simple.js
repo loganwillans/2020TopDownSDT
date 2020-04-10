@@ -21,7 +21,7 @@ jsPsych.plugins['sdt'] = (function(){
       {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Trial duration',
-        default: 10101,
+        default: 6000,
         description: 'How long to show trial before it ends.'
       }
     }
@@ -45,8 +45,8 @@ jsPsych.plugins['sdt'] = (function(){
   /*------------------------SETUP AND VARIABLES------------------------*/
   let ballCount = 40;
   let ballSize = 4;
-  let ballFastV = 0.8;
-  let ballSlowV = 0.5;
+  let ballFastV = 0.9;
+  let ballSlowV = 0.7;
   let balls = []; //array of balls, use push/pop to add/remove balls
   let ballColor = 'green' //green balls by default
   let circleRadius = wh*0.5 - 2*ballSize //radius is one ball-diameter smaller than half of canvas size
