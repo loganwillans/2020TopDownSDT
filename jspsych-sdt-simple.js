@@ -45,7 +45,7 @@ jsPsych.plugins['sdt'] = (function(){
   /*------------------------SETUP AND VARIABLES------------------------*/
   let ballCount = 40;
   let ballSize = 4;
-  let ballFastV = 0.9;
+  let ballFastV = 0.8;
   let ballSlowV = 0.6;
   let balls = []; //array of balls, use push/pop to add/remove balls
   let ballColor = 'green' //green balls by default
@@ -153,7 +153,7 @@ jsPsych.plugins['sdt'] = (function(){
         balls[i].update();
       }
 
-      if (Date.now() - start < 6000) {
+      if (Date.now() - start < 5000) {
       requestAnimationFrame(loop);
       }
       else{
