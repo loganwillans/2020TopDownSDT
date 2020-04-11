@@ -76,9 +76,9 @@ jsPsych.plugins['sdt'] = (function(){
       let rotP = random(0, 2*Math.PI);
       //ball should always move inwards, toward inside of circle
       //this means that ball should move randomly between 45deg arc on either side of radius line
-      //which translates to 135deg~225deg (3/4pi ~ 5/4pi).
+      //which translates to 135deg~225deg (3/4pi ~ 5/4pi). Or for a 60deg arc, (2/3pi ~ 4/3pi)
       //need to add rotP to correct for ball location on circle.
-      let rotV = random(3/4*Math.PI, 5/4*Math.PI) + rotP;
+      let rotV = random(2/3*Math.PI, 4/3*Math.PI) + rotP;
       let ball = new Ball(
         rotP,
         ballSlowV, //slow balls

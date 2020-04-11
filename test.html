@@ -29,7 +29,7 @@
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
-      stimulus: "Thank you for participating in our study. <br>In this experiment, you will play the role of the radar operator for a large civilian airport. <br>You will look at a screen and see several moving dots representing planes. Most of these dots will be harmless civilian aircrafts, but on some trials you will see one, flying faster (or moving faster across the screen). <br>The faster dot is the target military aircraft intended to bomb the airport. <br>Press any key to continue."
+      stimulus: "Thank you for participating in our study. <br>In this experiment, you will be the radar operator for a large civilian airport in a war zone. <br>You will look at a radar screen and see many moving dots representing planes. <br> Most of these dots will be harmless civilian aircraft, but on some trials you will see one flying faster (moving faster across the screen). <br> The faster dot is a hostile military aircraft that will bomb the airport. <br> Press any key to continue."
     };
     timeline.push(welcome);
 
@@ -44,19 +44,26 @@
     var lasttimelinedata = jsPsych.data.getLastTimelineData()
     var instructions = {
       type: 'html-keyboard-response',
-      stimulus: "You only have a brief period of time to make your decision. After a few seconds the screen will go blank and you must make your decision on whether there is a faster plane.  <br>By saying yes, you are shooting a missile at that plane, killing everyone on board. <br>If you say yes when there is no faster plane, you risk killing all the civilians on the plane. <br>By saying no even if there is a faster military plane present, the military plane bombs the airport, killing all the civilians there. <br>To say yes there is a faster plane press the ‘F’. To say no, press ‘J’. <br>In each round, you will get information on how many people are in the airport and how many are in the planes to help you make your choice. <br>In some rounds, this information will be presented before you see the screen of dots and in others you will get this information after you see the screen. <br>To continue press any key to begin. Good luck!"
+      stimulus: "If you decide YES, there is a faster hostile aircraft, a missile will be fired and a plane will be shot down. <br> If you decide NO, there are no hostile aircraft, no missiles will be fired. <br>If you decide YES when there are no faster hostile aircraft, the missile will kill everyone on board a civillian flight. <br> If you decide NO when there is a faster hostile aircraft present, it will bomb the airport, killing all the civilians there. <br> You only have a few seconds. Once the radar screen goes blank, you must make your decision. <br>To decide YES, there is a faster plane, press the F key. To decide NO, there are no faster planes, press the J key. <br> Press any key to continue."
 
     } 
     timeline.push(instructions)
+    
+    var instructions_2 = {
+      type: 'html-keyboard-response',
+      stimulus: "In each round, you will receive information on the number of people in the airport and the number of people in each plane. <br> You should use this information to help guide your decision-making as you try to minimize casualties. <br>In some rounds, this information will be presented before you see the radar screen. <br> In others, you will get this information after you see the screen. <br>Remember, to decide YES, there is a faster plane, press the F key. To decide NO, there are no faster planes, press the J key. <br> To continue press any key to begin. Good luck!"
+
+    } 
+    timeline.push(instructions_2)
 
     var falsePositiveScenario = {
       type: 'html-keyboard-response',
-      stimulus: "Today, the airport is busy and expected to have around 500 civilians whereas the planes flying have around 100 passengers. <br>Press any key to continue.",
+      stimulus: "Today, the airport is busy and expected to have around 500 civilians whereas the planes flying have around 100 passengers each. <br> Press any key to continue.",
     }
     
     var falseNegativeScenario = {
       type: 'html-keyboard-response',
-      stimulus: "The airport is quiet today with only around 100 people. The planes flying today are full with up to 500 passengers on the Airbus A380.<br>Press any key to continue.",
+      stimulus: "The airport is quiet today with only around 100 civillians. The planes flying today are full with around 500 passengers on the Airbus A380s.<br> Press any key to continue.",
     }
 
     var pleaseAnswer = {
