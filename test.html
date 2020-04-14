@@ -66,7 +66,7 @@ timeline.push(instructions)
 
 var instructions_2 = {
   type: 'html-keyboard-response',
-  stimulus: "In each round, you will receive information on the number of people in the airport and the number of people in each plane. <br> You should use this information to help guide your decision-making as you try to minimize casualties. <br> When there are more people in the airport, you will cause more deaths if you miss a hostile aircraft. <br> When there are more people on the planes, you will cause more deaths if you fire a missle when there are no hostile aircraft. <br> Press any key to continue."
+  stimulus: "In each round, you will receive information about the number of people in the airport and the number of people in each plane. <br> Your orders are to minimize casualties. <br> If there are more people at the airport, it's better to fire a missile when you are uncertain about whether an there is an enemy plane, and risk the lives of the 100 people on the plane instead of 500 at the airport. <br> If there are more people on each plane, it's better to not fire a missile when you are uncertain, and risk the lives of the 100 people at the airport instead of the 500 people on the plane. <br> Press any key to continue."
 }
 timeline.push(instructions_2)
 
@@ -88,7 +88,7 @@ var falseNegativeScenario = {
 
 var pleaseAnswer = {
   type: 'html-keyboard-response',
-  stimulus: "Was there a faster dot? Press 'F' for yes or 'J' for no.",
+  stimulus: "Was there an enemy plane (a faster dot)? Press 'F' for yes or 'J' for no.",
   choices: ['f', 'j'],
   on_finish: function(data){
     if(data.wasFastDot == "noFastDot" && data.key_press == 70){
