@@ -184,17 +184,37 @@ function coinFlip() {
   return (Math.floor(Math.random() * 2) == 0);
 }
 if(coinFlip() == true){
+  var first = {
+    type: 'html-keyboard-response',
+    stimulus: "For now, you will receive information before you see the radar screen. Press any key to continue."
+  }
+  timeline.push(first)
   for(var i = 0; i < shuffledBeforeTrialArray.length; i++){
     timeline.push(shuffledBeforeTrialArray[i])
   }
+  var change = {
+    type: 'html-keyboard-response',
+    stimulus: "From now on, you will receive information after you see the radar screen. Press any key to continue."
+  }
+  timeline.push(change)
   for(var i = 0; i < shuffledAfterTrialArray.length; i++){
     timeline.push(shuffledAfterTrialArray[i])
   }
 }
 else{
+  var first = {
+    type: 'html-keyboard-response',
+    stimulus: "For now, you will receive information after you see the radar screen. Press any key to continue."
+  }
+  timeline.push(first)
   for(var i = 0; i < shuffledAfterTrialArray.length; i++){
     timeline.push(shuffledAfterTrialArray[i])
   }
+  var change = {
+    type: 'html-keyboard-response',
+    stimulus: "From now on, you will receive information before you see the radar screen. Press any key to continue."
+  }
+  timeline.push(change)
   for(var i = 0; i < shuffledBeforeTrialArray.length; i++){
     timeline.push(shuffledBeforeTrialArray[i])
   }
