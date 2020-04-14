@@ -39,7 +39,7 @@ jsPsych.plugins['sdt-display'] = (function(){
     /*------------------------SETUP AND VARIABLES------------------------*/
     let ballCount = 40;
     let ballSize = 4;
-    let ballFastV = 0.86;
+    let ballFastV = 0.85;
     let ballSlowV = 0.6;
     let balls = [];
     let balls2 = [];//array of balls, use push/pop to add/remove balls
