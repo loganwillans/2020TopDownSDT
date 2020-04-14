@@ -29,19 +29,19 @@ jsPsych.plugins['sdt'] = (function(){
 
   /*------------------------------BEGIN TRIAL------------------------------*/
   plugin.trial = function(display_element, trial){
-  
+
   /*------------------------convert parameters to SDT------------------------*/
   let faster_check = trial.faster_or_same;
-  
+
   /*------------------------setting up canvas------------------------*/
   const canvas = document.createElement('canvas');
   display_element.appendChild(canvas); //append canvas to DOM
   const ctx = canvas.getContext('2d'); //get context of canvas so it can be drawn on
   const wh = canvas.width = canvas.height = 250; //set canvas size
-  
+
   /*------------------------SDT FUNCTIONS BEGIN------------------------*/
   /*-------------------------------------------------------------------*/
-  
+
   /*------------------------SETUP AND VARIABLES------------------------*/
   let ballCount = 40;
   let ballSize = 4;
@@ -50,9 +50,9 @@ jsPsych.plugins['sdt'] = (function(){
   let balls = []; //array of balls, use push/pop to add/remove balls
   let ballColor = 'green' //green balls by default
   let circleRadius = wh*0.5 - 2*ballSize //radius is one ball-diameter smaller than half of canvas size
-  
+
   /*------------------------CREATING BALLS------------------------*/
-  
+
   //-------------ball constructor-------------
   //spawns ball on circle originating from center of canvas, two ball-widths away from edge of canvas
         //this allows ball position to always be drawn at least one ball width
@@ -67,10 +67,10 @@ jsPsych.plugins['sdt'] = (function(){
     this.color = color;
     this.size = size;
   }
-  
+
   //----------------populates balls array with slow balls and one fast ball----------------
   function oneFastBall(){
-  
+
     while (balls.length < ballCount) {
       //rotP should be between (0, 2pi)
       let rotP = random(0, 2*Math.PI);
@@ -88,26 +88,26 @@ jsPsych.plugins['sdt'] = (function(){
       );
       balls.push(ball);
     }
-  
+
     while (balls.length <= ballCount) {
       //ibid. (check above)
       let rotP = random(0, 2*Math.PI);
       //ibid. (check above)
-      let rotV = random(3/4*Math.PI, 5/4*Math.PI) + rotP;
+      let rotV = random(7/8*Math.PI, 9/8*Math.PI) + rotP;
       let ball = new Ball(
         rotP,
         ballFastV, //one fast ball
         rotV,
         ballColor,
         ballSize
-      ); 
+      );
       balls.push(ball); //increments balls.length by 1
     }
   }
-  
+
   //----------------populates balls array with only slow balls----------------
   function noFastBalls(){
-  
+
     while (balls.length <= ballCount) {
       //store rotP variable to help inform ball direction
       let rotP = random(0, 2*Math.PI);
@@ -125,7 +125,7 @@ jsPsych.plugins['sdt'] = (function(){
       balls.push(ball);
     }
   }
-  
+
     // function to end trial when it is time
     var end_trial = function() {
 
@@ -141,13 +141,13 @@ jsPsych.plugins['sdt'] = (function(){
 
   /*------------------------FLOW CONTROL------------------------*/
   //loop function
-  function animation() 
+  function animation()
   {
     var start = Date.now()
     function loop(){
       ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-     ctx.fillRect(0, 0, wh, wh);
-  
+      ctx.fillRect(0, 0, wh, wh);
+
       for (let i = 0; i < balls.length; i++) {
         balls[i].draw();
         balls[i].update();
@@ -161,9 +161,9 @@ jsPsych.plugins['sdt'] = (function(){
       }
     }
     loop()
-    
+
   }
-  
+
   //ball draw function
   Ball.prototype.draw = function() {
     ctx.beginPath();
@@ -171,26 +171,26 @@ jsPsych.plugins['sdt'] = (function(){
     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
     ctx.fill();
   }
-  
+
   //ball update function
   Ball.prototype.update = function() {
     this.x += this.dx;
     this.y += this.dy;
   }
-  
+
   /*------------------------UTILITY FUNCTIONS------------------------*/
-  //returns random number (not integer) between range
+  //returns random number (decimal number) between range
   function random(min, max) {
     const num = Math.random() * (max - min) + min;
     return num;
   }
-  
+
   //makes random choice between two numbers
   function randChoice(numA, numB) {
   	let randomBoolean = Math.random() < 0.5;
   	return (randomBoolean ? numA : numB);
   }
-  
+
   /*------------------------RUNNING THE SCRIPT------------------------*/
   //starts animation
   if(faster_check) {
@@ -206,7 +206,7 @@ jsPsych.plugins['sdt'] = (function(){
   /*------------------------END SDT CODE------------------------*/
   //--------END OF TRIAL--------
 
-  } 
+  }
 
   return plugin;
 
