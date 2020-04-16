@@ -123,56 +123,56 @@ var oneFastBallTrial = {
 
 //False positive scenario, before the dots, with no dot moving faster
 var positiveBeforeSame = {
-  timeline: [whitescreen, falsePositiveScenario, oneFastBallTrial, pleaseAnswer],
+  timeline: [whitescreen, falsePositiveScenario, noFastBall, pleaseAnswer],
   data: {wasFastDot: "noFastDot",
   scenarioPlacement: "before",
   scenarioType: "falsePositive"}
 }
 //False positive scenaro, before the dots, with one dot moving faster.
 var positiveBeforeDifferent = {
-  timeline: [whitescreen, falsePositiveScenario, noFastBall, pleaseAnswer],
+  timeline: [whitescreen, falsePositiveScenario, oneFastBallTrial, pleaseAnswer],
   data: {wasFastDot: "yesFastDot",
   scenarioPlacement: "before",
   scenarioType: "falsePositive"}
 }
 //False negative scenario, before the dots, with no dot moving faster
 var negativeBeforeSame = {
-  timeline: [whitescreen, falseNegativeScenario, oneFastBallTrial, pleaseAnswer],
+  timeline: [whitescreen, falseNegativeScenario, noFastBall, pleaseAnswer],
   data: {wasFastDot: "noFastDot",
   scenarioPlacement: "before",
   scenarioType: "falseNegative"}
 }
 //False negative scenaro, before the dots, with one dot moving faster.
 var negativeBeforeDifferent = {
-  timeline: [whitescreen, falseNegativeScenario, noFastBall, pleaseAnswer],
+  timeline: [whitescreen, falseNegativeScenario, oneFastBallTrial, pleaseAnswer],
   data: {wasFastDot: "yesFastDot",
   scenarioPlacement: "before",
   scenarioType: "falseNegative"}
 }
 //False posative scenario, after the dots, with no dot moving faster
 var positiveAfterSame = {
-  timeline: [whitescreen, oneFastBallTrial, falsePositiveScenario, pleaseAnswer],
+  timeline: [whitescreen, noFastBall, falsePositiveScenario, pleaseAnswer],
   data: {wasFastDot: "noFastDot",
   scenarioPlacement: "after",
   scenarioType: "falsePositive"}
 }
 //False positive scenaro, after the dots, with one dot moving faster.
 var positiveAfterDifferent = {
-  timeline: [whitescreen, noFastBall, falsePositiveScenario, pleaseAnswer],
+  timeline: [whitescreen, oneFastBallTrial, falsePositiveScenario, pleaseAnswer],
   data: {wasFastDot: "yesFastDot",
   scenarioPlacement: "after",
   scenarioType: "falsePositive"}
 }
 //False negative scenario, after the dots, with no dot moving faster
 var negativeAfterSame = {
-  timeline: [whitescreen, oneFastBallTrial, falseNegativeScenario, pleaseAnswer],
+  timeline: [whitescreen, noFastBall, falseNegativeScenario, pleaseAnswer],
   data: {wasFastDot: "noFastDot",
   scenarioPlacement: "after",
   scenarioType: "falseNegative"}
 }
 //False negative scenaro, after the dots, with one dot moving faster.
 var negativeAfterDifferent = {
-  timeline: [whitescreen, noFastBall, falseNegativeScenario, pleaseAnswer],
+  timeline: [whitescreen, oneFastBallTrial, falseNegativeScenario, pleaseAnswer],
   data: {wasFastDot: "yesFastDot",
   scenarioPlacement: "after",
   scenarioType: "falseNegative"}
