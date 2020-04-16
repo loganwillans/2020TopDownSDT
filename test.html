@@ -46,14 +46,14 @@ var lasttimelinedata = jsPsych.data.getLastTimelineData()
 
 var test_instructions = {
   type: 'html-keyboard-response',
-  stimulus: "Next, you will be shown a practice trial with two radar screens. <br> Look VERY CAREFULLY at these screens. <br> THE LEFT SCREEN will have a faster hostile aircraft. The right screen will only have civillian aircraft. <br> The screens will refresh a few times, and the hostile aircraft are hard to see. <br> Please try to identify the hostile aircraft on the left screen as many times as you can. <br> There is no need to respond for the practice trial. After a minute, you will automatically move on."
+  stimulus: "Next, you will be shown a practice trial with two radar screens. <br> Look VERY CAREFULLY at these screens. <br> THE LEFT SCREEN will have a faster hostile aircraft. The right screen will only have civillian aircraft. <br> The screens will refresh a few times, and the hostile aircraft are hard to see. <br> Please try to identify the hostile aircraft on the left screen. <br> Press 'F' or 'J' to end the practice trial after you are able to identify the faster plane."
 
 }
 timeline.push(test_instructions)
 
 var display_dots = {
   type: 'sdt-display',
-  trial_duration: 30000,
+  trial_duration: 60000,
 }
 timeline.push(display_dots)
 
@@ -92,6 +92,9 @@ var pleaseAnswer = {
   choices: ['f', 'j'],
   on_finish: function(data){
     if(data.wasFastDot == "noFastDot" && data.key_press == 70){
+      data.correct = false;
+    }
+    else if(data.wasFastDot == "yesFastDot" && data.key_press == 74){
       data.correct = false;
     }
     else {

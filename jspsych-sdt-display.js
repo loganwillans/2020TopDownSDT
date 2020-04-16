@@ -33,6 +33,23 @@ jsPsych.plugins['sdt-display'] = (function(){
     const wh = canvas.width = canvas.height = 250; //set canvas size
     const wh2 = canvas2.width = canvas2.height = 250;
 
+    var keyboardListener;
+    //------------start the keyboard listener------------
+    function startKeyboardListener(){
+        //listen for subjects' key response
+        keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+          callback_function: end_trial, //call this after a valid key was pressed
+          valid_responses: ['f', 'j'], //keys that will be considered a valid response
+          rt_method: 'performance', //The type of method to record timing information
+          //If set to false, keyboard listener will only trigger the first time a valid key is pressed.
+          //If set to true, it has to be explicitly cancelled by the cancelKeyboardResponse plugin API.
+          persist: false,
+          //Only register the key once, after this getKeyboardResponse function is called.
+          //(Check JsPsych docs for better info under 'jsPsych.pluginAPI.getKeyboardResponse').
+          allow_held_key: false
+        });
+    }
+
     /*------------------------SDT FUNCTIONS BEGIN------------------------*/
     /*-------------------------------------------------------------------*/
 
@@ -122,7 +139,14 @@ jsPsych.plugins['sdt-display'] = (function(){
     }
 
     // function to end trial when it is time
-    var end_trial = function() {
+    function end_trial() {
+
+      trial_complete = true;
+
+      //end the keyboard listener
+    	if (typeof keyboardListener !== 'undefined') {
+    		jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+    	}
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
@@ -134,10 +158,12 @@ jsPsych.plugins['sdt-display'] = (function(){
       jsPsych.finishTrial();
     };
 
+    var kblswitch = 0;
     /*------------------------FLOW CONTROL------------------------*/
     //loop function
+    var trial_complete = false;
     function animation() {
-      var start = Date.now()
+      var start = Date.now();
       function loop(){
         ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
         ctx.fillRect(0, 0, wh, wh);
@@ -163,11 +189,16 @@ jsPsych.plugins['sdt-display'] = (function(){
           oneFastBall();
         }
 
+        if ((Date.now() - start) > 7000 && (Date.now() - start) < 7100 && !kblswitch) {
+          startKeyboardListener();
+          kblswitch = 1;
+        }
+
         if (Date.now() - start < trial.trial_duration) {
           requestAnimationFrame(loop);
         }
         else{
-          end_trial()
+          if(!trial_complete) { end_trial() }
         }
       }
       loop()
@@ -215,7 +246,6 @@ jsPsych.plugins['sdt-display'] = (function(){
   } else {
   noFastBalls();
 }*/
-
 noFastBalls(); //do this first to make second screen display no faster balls
 oneFastBall();
 
